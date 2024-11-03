@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ספירה לאחור</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            direction: rtl;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em;
+            color: #333;
+        }
+        .countdown {
+            font-size: 2em;
+            color: #007bff;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>האתר יתחיל בעוד:</h1>
+        <div class="countdown" id="countdown">00:00:00</div>
+    </div>
+
+    <script>
+        // הגדרת התאריך שאליו סופרים לאחור
+        const countdownDate = new Date("Dec 31, 2024 23:59:59").getTime();
+
+        // עדכון הספירה לאחור בכל שנייה
+        const countdownFunction = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            // חישוב זמן שנותר
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // הצגת הזמן
+            document.getElementById("countdown").innerHTML = 
+                (days > 0 ? days + " ימים " : "") + hours + ":" + 
+                (minutes < 10 ? "0" : "") + minutes + ":" + 
+                (seconds < 10 ? "0" : "") + seconds;
+
+            // כאשר הספירה מגיעה לאפס
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown").innerHTML = "האתר מוכן!";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
